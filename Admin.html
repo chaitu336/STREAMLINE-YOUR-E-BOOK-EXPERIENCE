@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Data Page</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f5f5f5;
+    }
+
+    .container {
+      margin-top: 20px;
+    }
+
+    .card {
+      margin: 10px 0;
+    }
+
+    .card-header {
+      background-color: #394240;
+      color: #fff;
+    }
+
+    .btn-danger {
+      margin-left: 10px;
+    }
+
+    .search-bar {
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="text-center py-2 bg-dark text-white">
+      <h1>Welcome to Admin Page</h1>
+      <button class="btn btn-primary mt-2" onclick="promptPassword()">View User Data</button>
+    </div>
+  </header>
+
+  <footer class="text-center py-3">
+    <p>&copy; 2024 Bookworm's Catalogue</p>
+  </footer>
+
+  <script>
+    const adminPassword = "123"; // Set your admin password here
+
+    // Function to prompt password and navigate to user data page
+    function promptPassword() {
+      const enteredPassword = prompt("Enter the password to view user data:");
+      if (enteredPassword === adminPassword) {
+        alert("Access granted! Redirecting...");
+        window.location.href = "user_data.html"; // Redirect to user data page
+      } else {
+        alert("Incorrect password! Access denied.");
+      }
+    }
+  </script>
+
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.4.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

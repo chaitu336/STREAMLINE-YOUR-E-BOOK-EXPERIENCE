@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Data</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f5f5f5;
+    }
+
+    .container {
+      margin-top: 20px;
+    }
+
+    .card {
+      margin: 10px 0;
+    }
+
+    .card-header {
+      background-color: #394240;
+      color: #fff;
+    }
+
+    .btn-danger {
+      margin-left: 10px;
+    }
+
+    .search-bar {
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="text-center py-2 bg-dark text-white">
+      <h1>User Data</h1>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="search-bar">
+      <input type="text" id="searchInput" class="form-control" placeholder="Search users by name or email..." onkeyup="searchUsers()">
+    </div>
+    <div id="userList" class="row"></div>
+  </div>
+
+  <footer class="text-center py-3">
+    <p>&copy; 2024 Bookworm's Catalogue</p>
+  </footer>
+
+  <script>
+    // Load user data from localStorage
+    function loadUserData() {
+      const userList = document.getElementById("userList");
+      userList.innerHTML = ""; // Clear existing content
+
+      Object.keys(localStorage).forEach(key => {
+        const userData = JSON.parse(localStorage.getItem(key));
+
+        // Skip non-user data entries
+        if (!userData || !userData.email) return;
+
+        const card = document.createElement("div");
+        card.classList.add("col-md-6", "card");
+
+        card.innerHTML = `
+          <div class="card-header">
+            <h5>${userData.username} (${userData.email})</h5>
+          </div>
+          <div class="card-body">
+            <p><strong>Phone:</strong> ${userData.phone}</p>
+            <p><strong>Gender:</strong> ${userData.gender}</p>
+            <p><strong>Address:</strong> ${userData.address}</p>
+            <p><strong>Genres:</strong> ${userData.genres.join(", ")}</p>
+            <button class="btn btn-danger" onclick="promptDelete('${userData.email}')">Delete</button>
+          </div>
+        `;
+        userList.appendChild(card);
+      });
+    }
+
+    // Search users by name or email
+    function searchUsers() {
+      const searchTerm = document.getElementById("searchInput").value.toLowerCase();
+      const userList = document.getElementById("userList");
+      const cards = userList.getElementsByClassName("card");
+
+      Array.from(cards).forEach(card => {
+        const username = card.querySelector(".card-header h5").textContent.toLowerCase();
+
+        if (username.includes(searchTerm)) {
+          card.style.display = ""; // Show the card
+        } else {
+          card.style.display = "none"; // Hide the card
+        }
+      });
+    }
+
+    // Load data on page load
+    window.onload = function() {
+      loadUserData();
+    };
+  </script>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.4.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

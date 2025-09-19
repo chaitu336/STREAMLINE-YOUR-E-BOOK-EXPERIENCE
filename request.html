@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Request Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        label {
+            font-size: 14px;
+            color: #333;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #requestsSection {
+            margin-top: 20px;
+        }
+
+        #requestsList {
+            list-style: none;
+            padding: 0;
+        }
+
+        #requestsList li {
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        #passwordSection {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        #passwordInput {
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Request a Book</h1>
+        <form id="bookForm">
+            <label for="bookName">Book Name:</label>
+            <input type="text" id="bookName" name="bookName" required>
+
+            <label for="author">Author:</label>
+            <input type="text" id="author" name="author" required>
+
+            <label for="genre">Genre:</label>
+            <input type="text" id="genre" name="genre" required>
+
+            <button type="submit">Request Book</button>
+        </form>
+
+        <div id="requestsSection">
+            <h2>Requested Books:</h2>
+            <ul id="requestsList"></ul>
+        </div>
+
+        <div id="passwordSection">
+            <h3>Delete All Book Requests</h3>
+            <input type="password" id="passwordInput" placeholder="Enter password to delete">
+            <button id="deleteButton">Delete All Requests</button>
+        </div>
+    </div>
+
+    <script>
+        const correctPassword = "336"; // Define the correct password here
+
+        document.getElementById('bookForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const bookName = document.getElementById('bookName').value;
+            const author = document.getElementById('author').value;
+            const genre = document.getElementById('genre').value;
+
+            if (bookName && author && genre) {
+                const requestItem = document.createElement('li');
+                requestItem.textContent = `Book Name: ${bookName}, Author: ${author}, Genre: ${genre}`;
+
+                document.getElementById('requestsList').appendChild(requestItem);
+
+                // Clear the form after submission
+                document.getElementById('bookForm').reset();
+            } else {
+                alert('Please fill in all fields.');
+            }
+        });
+
+        document.getElementById('deleteButton').addEventListener('click', function() {
+            const enteredPassword = document.getElementById('passwordInput').value;
+
+            if (enteredPassword === correctPassword) {
+                // Clear all requested books
+                document.getElementById('requestsList').innerHTML = '';
+                alert('All requests have been deleted.');
+            } else {
+                alert('Incorrect password. Please try again.');
+            }
+
+            // Clear the password input field
+            document.getElementById('passwordInput').value = '';
+        });
+    </script>
+</body>
+</html>
